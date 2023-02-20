@@ -28,8 +28,8 @@ class BrandResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('slug')
-                    ->required(fn (Brand $record) => $record instanceof Brand)
-                    ->disabled(fn (Brand $record) => !($record instanceof Brand))
+                    ->required(fn (?Brand $record) => $record instanceof Brand)
+                    ->disabled(fn (?Brand $record) => !($record instanceof Brand))
                     ->maxLength(255),
                 Forms\Components\Toggle::make('active')
                     ->default(true)
