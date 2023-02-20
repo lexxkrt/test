@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $page = Page::firstOrCreate(['slug' => 'home'], ['Главная страница' => '', 'slug' => 'home']);
+        $page = Page::firstOrCreate(['slug' => 'home'], ['title' => 'Главная страница']);
         return view('home', ['page' => $page]);
     }
 }
