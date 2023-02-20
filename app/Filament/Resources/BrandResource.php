@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\BrandResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BrandResource\RelationManagers;
+use Filament\Tables\Filters\SelectFilter;
 
 class BrandResource extends Resource
 {
@@ -43,19 +44,30 @@ class BrandResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Наименование')
+                    ->sortable()
+                    ->searchable()
                     ->description(fn (?Brand $record) => $record->slug),
                 Tables\Columns\IconColumn::make('active')
+                    ->label('Статус')
+                    ->action(function (Brand $record) {
+                        $record->update(['active' => !$record->active]);
+                    })
                     ->boolean(),
             ])
             ->filters([
-                //
+                SelectFilter::make('active')
+                    ->label('Статус')
+                    ->options([
+                        1 => 'Активные',
+                        0 => 'Неактивные'
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-            ]);
+            ])->defaultSort('name');
     }
 
     public static function getRelations(): array
