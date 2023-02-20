@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\BrandViewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/brands',BrandController::class)->name('brands');
+Route::get('/brands/{brand:slug}',BrandViewController::class)->name('brand.view');
