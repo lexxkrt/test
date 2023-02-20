@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\BrandResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BrandResource\RelationManagers;
+use Filament\Forms\Components\Card;
 use Filament\Tables\Filters\SelectFilter;
 
 class BrandResource extends Resource
@@ -29,16 +30,19 @@ class BrandResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
-                    ->required(fn (?Brand $record) => $record instanceof Brand)
-                    ->disabled(fn (?Brand $record) => !($record instanceof Brand))
-                    ->maxLength(255),
-                Forms\Components\Toggle::make('active')
-                    ->default(true)
-                    ->required(),
+                Card::make([
+                    Forms\Components\TextInput::make('name')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('slug')
+                        ->required(fn (?Brand $record) => $record instanceof Brand)
+                        ->disabled(fn (?Brand $record) => !($record instanceof Brand))
+                        ->maxLength(255),
+                    Forms\Components\Toggle::make('active')
+                        ->columnSpan('full')
+                        ->default(true)
+                        ->required(),
+                ])->columns(2)
             ]);
     }
 
