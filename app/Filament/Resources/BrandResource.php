@@ -32,6 +32,7 @@ class BrandResource extends Resource
             ->schema([
                 Card::make([
                     Forms\Components\TextInput::make('name')
+                        ->unique()
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('slug')
